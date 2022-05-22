@@ -90,6 +90,34 @@ const employeeQuestions = [
     }
 ]
 
+const updateQuestions = [
+    {
+        type: 'list',
+        name: 'employee',
+        message: 'Which employee would you like to update?',
+        choices: [
+            'Kevin',
+            'Kunal',
+            'Malia',
+            'Sarah',
+            'Tom',
+            'Amanda'
+        ]
+    },
+    {
+        type: 'list',
+        name: 'empRole',
+        message: 'What is this employee\'s new role?',
+        choices: [
+            'Developer',
+            'Software Engineer',
+            'Accountant',
+            'Intern',
+            'Copywriter'
+        ]
+    }
+];
+
 function init() {
     inquirer.prompt(questions)
     .then(answers => {
@@ -113,7 +141,7 @@ function init() {
                 addEmployee();
                 break;
             case 'Update employee role':
-                console.log('7');
+                updateEmployee();
                 break;
             case 'Exit':
                 break;
@@ -157,6 +185,7 @@ function viewAllEmployees() {
         }
         //TODO: need to find out how to say which manager they report to based on manager id
         console.log(res);
+        // console.log(res[0].first_name);
         init();
     });
 };
@@ -201,7 +230,7 @@ function addEmployee() {
     .then(answer => {
         console.log(answer);
         const statement = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
-        params = [answer.firstName, answer.lastName, roleId(answer.role), managerId(answer.manager)];
+        params = [answer.firstName, answer.lastName, getRoleId(answer.role), getManagerId(answer.manager)];
 
         connection.query(statement, params, (err, res) => {
             if (err) {
@@ -212,6 +241,24 @@ function addEmployee() {
             init();
         });
     })
+};
+
+function updateEmployee() {
+    inquirer.prompt(updateQuestions)
+    .then(answer => {
+        console.log(answer);
+        const statement = `UPDATE employees SET role_id = ? WHERE first_name = ?`;
+        params = [getRoleId(answer.empRole), answer.employee];
+
+        connection.query(statement, params, (err, res) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            console.log('Employee updated!');
+            init();
+        });
+    });
 };
 
 
@@ -232,7 +279,7 @@ function getDeptId(deptId) {
     return id;
 }
 
-function roleId(role) {
+function getRoleId(role) {
     let id = 0;
     switch(role) {
         case 'Engineering':
@@ -254,7 +301,7 @@ function roleId(role) {
     return id;
 }
 
-function managerId(manager) {
+function getManagerId(manager) {
     let id = 0;
     switch(manager) {
         case 'Mike Chan':
