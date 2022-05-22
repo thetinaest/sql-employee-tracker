@@ -1,7 +1,6 @@
-const PORT = 3001;
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
-const { allowedNodeEnvironmentFlags } = require('process');
+const cTable = require('console.table');
 
 
 const connection = mysql.createConnection({
@@ -144,12 +143,12 @@ function init() {
                 updateEmployee();
                 break;
             case 'Exit':
+                endAll();
                 break;
         };
     });
 };
 
-// TODO: don't forget to fomat all this data to look nice when it console logs
 function viewAllDepts() {
     const statement = `SELECT * FROM departments;`;
     connection.query(statement, (err, res) => {
@@ -183,9 +182,7 @@ function viewAllEmployees() {
             console.log(err);
             return;
         }
-        //TODO: need to find out how to say which manager they report to based on manager id
         console.log(res);
-        // console.log(res[0].first_name);
         init();
     });
 };
@@ -261,6 +258,26 @@ function updateEmployee() {
     });
 };
 
+function endAll() {
+    console.log('\n');
+    console.log('*------------------*');
+    console.log('---- Good Bye! ----');
+    console.log('*------------------*');
+    console.log('\n');
+
+    connection.end();
+
+}
+
+function beginAll() {
+    console.log('\n');
+    console.log('*------------------*');
+    console.log('---- Welcome to ---');
+    console.log('----- Employee ----');
+    console.log('----- Tracker! ----');
+    console.log('*------------------*');
+    console.log('\n');
+}
 
 //functions that return ids that the db understands
 function getDeptId(deptId) {
@@ -314,4 +331,5 @@ function getManagerId(manager) {
     return id;
 }
 
+beginAll();
 init();

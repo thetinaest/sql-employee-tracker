@@ -4,7 +4,8 @@ INSERT INTO departments
 VALUES
     ('Management'),
     ('Engineering'),
-    ('Finance');
+    ('Finance'),
+    ('Marketing');
 
 INSERT INTO roles
     (title, salary, department_id)
@@ -13,7 +14,8 @@ VALUES
     ('Developer', 75000, 2),
     ('Software Engineer', 120000, 2),
     ('Accountant', 95000, 3),
-    ('Intern', 50000, 2);
+    ('Intern', 50000, 2),
+    ('Copywriter', 65000, 4);
 
 INSERT INTO employees
     (first_name, last_name, role_id, manager_id)
@@ -24,6 +26,7 @@ VALUES
     ('Kunal', 'Singh', 4, 1),
     ('Malia', 'Brown', 5, 2),
     ('Sarah', 'Lourd', 4, 1),
-    ('Tom', 'Allen', 3, 2);
+    ('Tom', 'Allen', 3, 2),
+    ('Amanda', 'Smith', 3, 2);
 
 
