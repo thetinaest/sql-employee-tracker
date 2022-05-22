@@ -4,7 +4,7 @@ CREATE DATABASE emp_tracker;
 USE emp_tracker;
 CREATE TABLE departments (
     id INT AUTO_INCREMENT,
-    dept_name VARCHAR(30) NOT NULL,
+    department_name VARCHAR(30) NOT NULL,
     PRIMARY KEY(id)
 );
 
