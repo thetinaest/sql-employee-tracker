@@ -156,8 +156,9 @@ function viewAllDepts() {
             console.log(err);
             return;
         }
-
-        console.log(res);
+        console.log('\n');
+        console.table(res);
+        console.log('\n');
         init();
     });
 };
@@ -169,8 +170,9 @@ function viewAllRoles() {
             console.log(err);
             return;
         }
-
-        console.log(res);
+        console.log('\n');
+        console.table(res);
+        console.log('\n');
         init();
     });
 };
@@ -182,7 +184,9 @@ function viewAllEmployees() {
             console.log(err);
             return;
         }
-        console.log(res);
+        console.log('\n');
+        console.table(res);
+        console.log('\n');
         init();
     });
 };
@@ -207,7 +211,6 @@ function addDepartment() {
 function addRole() {
     inquirer.prompt(roleQuestions)
     .then(answer => {
-        console.log(answer);
         const statement = `INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)`;
         params = [answer.roleTitle, answer.roleSalary, getDeptId(answer.deptId)];
 
@@ -225,7 +228,6 @@ function addRole() {
 function addEmployee() {
     inquirer.prompt(employeeQuestions)
     .then(answer => {
-        console.log(answer);
         const statement = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
         params = [answer.firstName, answer.lastName, getRoleId(answer.role), getManagerId(answer.manager)];
 
@@ -243,7 +245,6 @@ function addEmployee() {
 function updateEmployee() {
     inquirer.prompt(updateQuestions)
     .then(answer => {
-        console.log(answer);
         const statement = `UPDATE employees SET role_id = ? WHERE first_name = ?`;
         params = [getRoleId(answer.empRole), answer.employee];
 
@@ -283,7 +284,7 @@ function beginAll() {
 function getDeptId(deptId) {
     let id = 0;
     switch(deptId) {
-        case 'Developer':
+        case 'Engineering':
             id = 2;
             break;
         case 'Finance':
@@ -299,7 +300,7 @@ function getDeptId(deptId) {
 function getRoleId(role) {
     let id = 0;
     switch(role) {
-        case 'Engineering':
+        case 'Developer':
             id = 2;
             break;
         case 'Software Engineer':
